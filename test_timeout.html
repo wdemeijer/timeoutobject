@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript">
+function TimeoutManager(timeout_duration) {	
+	this.timeout_duration = timeout_duration;
+	this.timer;
+}
+TimeoutManager.prototype.constructor = TimeoutManager;
+TimeoutManager.prototype.start_timeout = function() {
+	clearTimeout(this.timer);
+	var self = this; // var in self declaration is very important
+	this.timer = setTimeout(function(){ self.alert_something(); }, this.timeout_duration);
+}
+TimeoutManager.prototype.cancel_timeout = function() {
+	clearTimeout(this.timer);
+	console.log("Cancelled timeout.");
+}
+TimeoutManager.prototype.alert_something = function() {	
+	console.log("Alerting something!");
+}
+
+var wait_time = 1000; // Set to wait 1 seconds before push trackEvent to analytics
+timeout_manager = new TimeoutManager(wait_time);
+function start() {
+	timeout_manager.start_timeout();
+}
+function cancel() {
+	timeout_manager.cancel_timeout();
+}
+		</script>
+		<title>Object clearTimeout setTimeout test</title>
+	</head>
+
+	<body>
+	<input type="button" value="Start Timeout" onClick="javascript:start();">
+	<input type="button" value="Cancel Timeout" onClick="javascript:cancel();">
+	</body>
+
+</html>
